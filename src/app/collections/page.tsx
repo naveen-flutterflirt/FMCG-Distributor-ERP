@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { IndianRupee, Check, X } from 'lucide-react';
+import { IndianRupee, X } from 'lucide-react';
 import { mockOutlets } from '@/data/mockData';
 import { useCrm } from '@/context/CrmContext';
 

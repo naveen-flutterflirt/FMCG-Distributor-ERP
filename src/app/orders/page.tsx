@@ -5,8 +5,6 @@ import {
   CheckSquare,
   Square,
   Printer,
-  Truck,
-  Check,
 } from 'lucide-react';
 import { useCrm } from '@/context/CrmContext';
 import { FMCGCompany } from '@/types/crm';

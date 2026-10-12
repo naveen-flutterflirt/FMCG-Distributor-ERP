@@ -1,15 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import {
-  Store,
-  MapPin,
-  Plus,
-  Search,
-  CheckCircle,
-  AlertCircle,
-  Phone,
-} from 'lucide-react';
+import { Plus, Search } from 'lucide-react';
 import { mockOutlets } from '@/data/mockData';
 import { useCrm } from '@/context/CrmContext';
 

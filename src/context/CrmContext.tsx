@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useMemo, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import {
   FMCGCompany,
   PendingOrder,
@@ -111,18 +111,16 @@ export function CrmProvider({ children }: { children: React.ReactNode }) {
   };
 
   // Filter orders reactively based on route, company, and global search query
-  const filteredOrders = useMemo(() => {
-    return orders.filter((order) => {
-      const matchRoute =
-        selectedRoute === 'All' || order.route.toLowerCase().includes(selectedRoute.toLowerCase());
-      const matchSearch =
-        !globalSearch ||
-        order.id.toLowerCase().includes(globalSearch.toLowerCase()) ||
-        order.outlet.toLowerCase().includes(globalSearch.toLowerCase()) ||
-        order.route.toLowerCase().includes(globalSearch.toLowerCase());
-      return matchRoute && matchSearch;
-    });
-  }, [orders, selectedRoute, globalSearch]);
+  const filteredOrders = orders.filter((order) => {
+    const matchRoute =
+      selectedRoute === 'All' || order.route.toLowerCase().includes(selectedRoute.toLowerCase());
+    const matchSearch =
+      !globalSearch ||
+      order.id.toLowerCase().includes(globalSearch.toLowerCase()) ||
+      order.outlet.toLowerCase().includes(globalSearch.toLowerCase()) ||
+      order.route.toLowerCase().includes(globalSearch.toLowerCase());
+    return matchRoute && matchSearch;
+  });
 
   const bulkBillSelected = () => {
     const validOrders = orders.filter(
