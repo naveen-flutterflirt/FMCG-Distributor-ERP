@@ -67,7 +67,8 @@ export interface DashboardStatsData {
 }
 
 export const dashboardApi = {
-  getStats: async () => {
-    return apiClient.get<DashboardStatsData>('/dashboard/stats');
+  getStats: async (company?: string) => {
+    const params = company && company !== 'All' ? `?company=${encodeURIComponent(company)}` : '';
+    return apiClient.get<DashboardStatsData>(`/dashboard/stats${params}`);
   }
 };

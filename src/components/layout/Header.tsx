@@ -284,20 +284,6 @@ export function Header() {
             <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>New order</span>
           </button>
-
-          {/* User profile & Logout */}
-          <div className="flex items-center gap-2 pl-2 border-l border-slate-200">
-            <span className="text-[12px] font-medium text-slate-700 hidden sm:inline">
-              {user?.name || user?.email || 'Admin'}
-            </span>
-            <button
-              onClick={logout}
-              title="Sign out"
-              className="p-1.5 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors cursor-pointer"
-            >
-              <LogOut className="w-4 h-4" />
-            </button>
-          </div>
         </div>
       </div>
     </header>

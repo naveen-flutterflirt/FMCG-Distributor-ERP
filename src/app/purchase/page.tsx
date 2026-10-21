@@ -23,16 +23,22 @@ import { useCrm } from '@/context/CrmContext';
 import { purchaseApi, PurchaseOrder, PurchaseSummary } from '@/lib/api';
 
 export default function PurchasePage() {
-  const { showAlert } = useCrm();
+  const { showAlert, selectedCompany: globalCompany, setSelectedCompany: setGlobalCompany } = useCrm();
 
   const [orders, setOrders] = useState<PurchaseOrder[]>([]);
   const [summary, setSummary] = useState<PurchaseSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [expandedPoId, setExpandedPoId] = useState<string | null>(null);
 
-  // Filters
-  const [selectedCompany, setSelectedCompany] = useState('All');
+  // Filters - sync with global header company
+  const [selectedCompany, setSelectedCompany] = useState<string>(globalCompany || 'All');
   const [selectedStatus, setSelectedStatus] = useState('All');
+
+  useEffect(() => {
+    if (globalCompany) {
+      setSelectedCompany(globalCompany);
+    }
+  }, [globalCompany]);
 
   // Modal: Generate Primary PO
   const [isPoModalOpen, setIsPoModalOpen] = useState(false);
@@ -165,7 +171,10 @@ export default function PurchasePage() {
           {/* Company Filter */}
           <select
             value={selectedCompany}
-            onChange={(e) => setSelectedCompany(e.target.value)}
+            onChange={(e) => {
+              setSelectedCompany(e.target.value);
+              setGlobalCompany(e.target.value as any);
+            }}
             className="text-[12px] bg-white border border-[#d1d5db] rounded-[6px] px-2.5 py-1.5 text-slate-700 outline-none focus:border-[#005f56]"
           >
             <option value="All">All Companies</option>

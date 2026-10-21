@@ -20,16 +20,22 @@ import { useCrm } from '@/context/CrmContext';
 import { schemeApi, Scheme, SchemesSummary } from '@/lib/api';
 
 export default function SchemesPage() {
-  const { showAlert } = useCrm();
+  const { showAlert, selectedCompany: globalCompany, setSelectedCompany: setGlobalCompany } = useCrm();
 
   const [schemes, setSchemes] = useState<Scheme[]>([]);
   const [summary, setSummary] = useState<SchemesSummary | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Filters
-  const [selectedCompany, setSelectedCompany] = useState('All');
+  // Filters - sync with global header company
+  const [selectedCompany, setSelectedCompany] = useState<string>(globalCompany || 'All');
   const [selectedStatus, setSelectedStatus] = useState('All');
   const [selectedType, setSelectedType] = useState('All');
+
+  useEffect(() => {
+    if (globalCompany) {
+      setSelectedCompany(globalCompany);
+    }
+  }, [globalCompany]);
 
   // Modal State: Configure Scheme
   const [modalOpen, setModalOpen] = useState(false);
@@ -123,7 +129,10 @@ export default function SchemesPage() {
         <div className="flex items-center gap-2 flex-wrap">
           <select
             value={selectedCompany}
-            onChange={(e) => setSelectedCompany(e.target.value)}
+            onChange={(e) => {
+              setSelectedCompany(e.target.value);
+              setGlobalCompany(e.target.value as any);
+            }}
             className="text-[12px] bg-white border border-[#d1d5db] rounded-[6px] px-2.5 py-1.5 font-medium text-[#374151] cursor-pointer focus:outline-none focus:border-[#005f56]"
           >
             <option value="All">Company: All ▾</option>

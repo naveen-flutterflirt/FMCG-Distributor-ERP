@@ -20,17 +20,23 @@ import { useCrm } from '@/context/CrmContext';
 import { claimApi, Claim, ClaimsSummary } from '@/lib/api';
 
 export default function ClaimsPage() {
-  const { showAlert } = useCrm();
+  const { showAlert, selectedCompany: globalCompany, setSelectedCompany: setGlobalCompany } = useCrm();
 
   const [claims, setClaims] = useState<Claim[]>([]);
   const [summary, setSummary] = useState<ClaimsSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeClaimId, setActiveClaimId] = useState<string>('');
 
-  // Filters
-  const [selectedCompany, setSelectedCompany] = useState('All');
+  // Filters - sync with global header company
+  const [selectedCompany, setSelectedCompany] = useState<string>(globalCompany || 'All');
   const [selectedStatus, setSelectedStatus] = useState('All');
   const [selectedType, setSelectedType] = useState('All');
+
+  useEffect(() => {
+    if (globalCompany) {
+      setSelectedCompany(globalCompany);
+    }
+  }, [globalCompany]);
 
   // Modal: Raise New Claim
   const [isRaiseModalOpen, setIsRaiseModalOpen] = useState(false);
@@ -143,7 +149,10 @@ export default function ClaimsPage() {
         <div className="flex items-center gap-2 flex-wrap">
           <select
             value={selectedCompany}
-            onChange={(e) => setSelectedCompany(e.target.value)}
+            onChange={(e) => {
+              setSelectedCompany(e.target.value);
+              setGlobalCompany(e.target.value as any);
+            }}
             className="text-[12px] bg-white border border-[#d1d5db] rounded-[6px] px-2.5 py-1.5 font-medium text-[#374151] cursor-pointer focus:outline-none focus:border-[#005f56]"
           >
             <option value="All">Company: All ▾</option>
