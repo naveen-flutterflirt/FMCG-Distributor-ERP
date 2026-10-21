@@ -104,3 +104,48 @@ select:disabled,
   padding: 2px 8px;
   border-radius: 9999px;
 }
+
+/* Professional Print Stylesheet */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm 12mm;
+  }
+
+  /* Hide background elements, sidebars, headers, and modals backdrop */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Show only the invoice container */
+  #printable-invoice,
+  #printable-invoice * {
+    visibility: visible;
+  }
+
+  #printable-invoice {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 10pt;
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  table {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Force background colors and crisp borders in print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
